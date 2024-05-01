@@ -1,10 +1,12 @@
 import React, { useRef } from "react";
 import { FaGithub } from "react-icons/fa";
 import { RiGlobalLine } from "react-icons/ri";
-import { FIREBASE_KEY, USER_UPDATE_INFO } from "../../utils/constants";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import useUpdateUserInfo from "../../hooks/useUpdateUserInfo";
 
 const UserForm = () => {
+  const dispatch = useDispatch();
+
   const name = useRef(null);
   const userPhotoUrl = useRef(null);
   const userToken = useSelector((store) => store.user.token);
@@ -17,16 +19,7 @@ const UserForm = () => {
       returnSecureToken: true,
     });
 
-    const response = await fetch(USER_UPDATE_INFO + FIREBASE_KEY, {
-      method: "POST",
-      body: postRequestDataForUpdateUserInfo,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    console.log(data)
-
+    useUpdateUserInfo(dispatch, postRequestDataForUpdateUserInfo);
   };
 
   return (
