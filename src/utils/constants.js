@@ -5,3 +5,5 @@ export const USER_SIGN_IN =
   "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
 export const USER_UPDATE_INFO =
   "https://identitytoolkit.googleapis.com/v1/accounts:update?key=";
+export const GET_USER_DATA =
+  "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=";

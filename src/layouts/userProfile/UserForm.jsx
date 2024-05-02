@@ -1,8 +1,9 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { FaGithub } from "react-icons/fa";
 import { RiGlobalLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import useUpdateUserInfo from "../../hooks/useUpdateUserInfo";
+import useGetUserData from "../../hooks/useGetUserData";
 
 const UserForm = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,10 @@ const UserForm = () => {
 
     useUpdateUserInfo(dispatch, postRequestDataForUpdateUserInfo);
   };
+
+  useEffect(() => {
+    useGetUserData(userToken);
+  }, []);
 
   return (
     <div className="flex-col  border-b border-black">
