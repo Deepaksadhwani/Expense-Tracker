@@ -4,6 +4,7 @@ import { RiGlobalLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import useUpdateUserInfo from "../../hooks/useUpdateUserInfo";
 import useGetUserData from "../../hooks/useGetUserData";
+import useVerifyUserEmail from "../../hooks/useVerifyUserEmail";
 
 const UserForm = () => {
   const dispatch = useDispatch();
@@ -20,12 +21,16 @@ const UserForm = () => {
       returnSecureToken: true,
     });
 
-    useUpdateUserInfo(dispatch, postRequestDataForUpdateUserInfo);
+    useUpdateUserInfo(postRequestDataForUpdateUserInfo);
   };
 
+  useVerifyUserEmail();
+
   useEffect(() => {
-    useGetUserData(userToken);
+    useGetUserData(dispatch, userToken);
   }, []);
+
+  
 
   return (
     <div className="flex-col  border-b border-black">
@@ -55,9 +60,12 @@ const UserForm = () => {
           />
         </div>
       </div>
-      <button onClick={userUpdateInfoHandler} className="ml-[45%] py-4">
-        Update
-      </button>
+      <div className="flex justify-between px-10">
+        
+        <button onClick={userUpdateInfoHandler} className="ml-[45%] py-4">
+          Update
+        </button>
+      </div>
     </div>
   );
 };
