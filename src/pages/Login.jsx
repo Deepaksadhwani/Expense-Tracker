@@ -44,6 +44,7 @@ const Login = () => {
       if (!response.ok) {
         setError(data.error.message);
       }
+      localStorage.setItem("token",data?.idToken);
       dispatch(addToken(data?.idToken));
     } else {
       const response = await fetch(USER_SIGN_IN + FIREBASE_KEY, {
@@ -57,6 +58,8 @@ const Login = () => {
       const data = await response.json();
       console.log(data);
       dispatch(addToken(data?.idToken));
+      localStorage.setItem("token",data?.idToken);
+
       if (!response.ok) {
         setError(data.error.message);
       }
