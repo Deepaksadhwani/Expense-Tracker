@@ -1,12 +1,16 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { addToken } from "../store/userSlice";
 
 const Home = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const moveToUserPageHandler = () => {
     navigate("/ProfilePage");
   };
   const logoutHandler = () => {
     localStorage.removeItem("token");
+    dispatch(addToken());
     navigate("/");
   };
 

@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Login from "./pages/Login";
+import { Navigate, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const App = () => {
-  return (
-    <div>
-      <Login />
+  const tokenUserSlice = useSelector((store) => store.user.token);
 
+  return !tokenUserSlice ? (
+    <Login />
+  ) : (
+    <div>
+      <Outlet />
     </div>
   );
 };

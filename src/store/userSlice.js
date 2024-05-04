@@ -10,11 +10,11 @@ const userSlice = createSlice({
     setUserData: (state, action) => {
       state.userData = action.payload;
     },
-    removeToken: (action) => {
-      return null;
+    removeToken: (state, action) => {
+      state.token = null;
     },
   },
 });
 
-export const { addToken,removeToken,setUserData } = userSlice.actions;
+export const { addToken, removeToken, setUserData } = userSlice.actions;
 export default userSlice.reducer;

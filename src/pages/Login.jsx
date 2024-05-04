@@ -41,11 +41,13 @@ const Login = () => {
       });
       const data = await response.json();
       console.log(data);
+      useNavigate("/")
       if (!response.ok) {
         setError(data.error.message);
       }
-      localStorage.setItem("token",data?.idToken);
-      dispatch(addToken(data?.idToken));
+
+      localStorage.setItem("token", data?.idToken);
+      
     } else {
       const response = await fetch(USER_SIGN_IN + FIREBASE_KEY, {
         method: "POST",
@@ -54,18 +56,19 @@ const Login = () => {
           "Content-Type": "application/json",
         },
       });
-      navigate("/home");
+    
       const data = await response.json();
       console.log(data);
-      dispatch(addToken(data?.idToken));
-      localStorage.setItem("token",data?.idToken);
-
+      navigate("/");
+      localStorage.setItem("token", data?.idToken);
+     
       if (!response.ok) {
         setError(data.error.message);
       }
     }
   };
-
+  const userToken = localStorage.getItem("token");
+  dispatch(addToken(userToken));
   return (
     <div className="relative flex h-screen items-center justify-center bg-gradient-to-br from-pink-800 via-purple-800 to-blue-800 md:items-end ">
       <div className="flex w-[90%]  flex-col  items-center space-y-3 rounded-md border-2 bg-gray-100 py-20 shadow-lg  md:mb-[5%] md:ml-[35%]  md:w-[20%] md:py-14">
