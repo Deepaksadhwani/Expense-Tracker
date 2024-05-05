@@ -5,5 +5,5 @@
 
 
 .btn {
-    @apply bg-blue-500 hover:bg-blue-700 p-2 text-white duration-200 transition-all font-semibold rounded-lg;
+    @apply bg-[#FFC55A] hover:bg-yellow-600 p-2 text-gray-800 duration-200 transition-all font-semibold rounded-lg;
 }

@@ -1,12 +1,14 @@
 import React, { useRef, useState } from "react";
 import { checkValidData } from "../utils/validate";
 import { FIREBASE_KEY, USER_SIGN_IN, USER_SIGN_UP } from "../utils/constants";
-import finance from "/src/assets/finance.png";
+import bg1 from "/src/assets/bg1.png";
 import { useNavigate } from "react-router-dom";
 import { addToken } from "../store/userSlice";
 import { useDispatch } from "react-redux";
+import Shimmer from "../components/Shimmer";
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const name = useRef(null);
   const email = useRef(null);
@@ -19,6 +21,7 @@ const Login = () => {
   };
 
   const validationHandler = async () => {
+    setIsLoading(true);
     const nameValue = name?.current?.value;
     const emailValue = email.current.value;
     const passwordValue = password.current.value;
@@ -41,13 +44,13 @@ const Login = () => {
       });
       const data = await response.json();
       console.log(data);
-      useNavigate("/")
+      useNavigate("/");
       if (!response.ok) {
         setError(data.error.message);
+        setIsLoading(false);
       }
 
       localStorage.setItem("token", data?.idToken);
-      
     } else {
       const response = await fetch(USER_SIGN_IN + FIREBASE_KEY, {
         method: "POST",
@@ -56,12 +59,12 @@ const Login = () => {
           "Content-Type": "application/json",
         },
       });
-    
+
       const data = await response.json();
       console.log(data);
       navigate("/");
       localStorage.setItem("token", data?.idToken);
-     
+
       if (!response.ok) {
         setError(data.error.message);
       }
@@ -69,13 +72,21 @@ const Login = () => {
   };
   const userToken = localStorage.getItem("token");
   dispatch(addToken(userToken));
+  if (isLoading) return <Shimmer />;
   return (
-    <div className="relative flex h-screen items-center justify-center bg-gradient-to-br from-pink-800 via-purple-800 to-blue-800 md:items-end ">
-      <div className="flex w-[90%]  flex-col  items-center space-y-3 rounded-md border-2 bg-gray-100 py-20 shadow-lg  md:mb-[5%] md:ml-[35%]  md:w-[20%] md:py-14">
+    <div className="relative z-10 flex h-screen items-center  justify-center bg-gradient-to-br from-black via-gray-700 to-black md:items-end ">
+      <div className="flex w-[90%]  flex-col  items-center space-y-3 rounded-md border-2 bg-white py-20 shadow-md shadow-black border-gray-200  md:mb-[5%] md:ml-[35%]  md:w-[20%] md:py-10 ">
         <h1 className="mb-10 font-Mont text-3xl font-semibold text-blue-500  md:mb-0 ">
           {isSign ? "Sign In" : "Sign Up"}
         </h1>
-        {!isSign && <input ref={name} type="text" placeholder="Name" />}
+        {!isSign && (
+          <input
+            ref={name}
+            type="text"
+            className=" border  border-gray-700 p-2  focus:border-blue-500 focus:outline-none"
+            placeholder="Name"
+          />
+        )}
         <input
           className=" border  border-gray-700 p-2  focus:border-blue-500 focus:outline-none"
           ref={email}
@@ -88,7 +99,8 @@ const Login = () => {
           type="password"
           placeholder="Password"
         />
-        <p className="pt-2 font-medium text-red-800 ">{error}</p>
+        <button className="font-semibold text-red-600">Forget password?</button>
+        <p className="mt-1 font-medium text-red-800 ">{error}</p>
         <button
           className=" w-[60%] rounded-lg bg-blue-500 p-2 font-Mont font-semibold text-white transition-all duration-300 hover:bg-blue-700 md:w-[75%]"
           onClick={validationHandler}
@@ -96,7 +108,7 @@ const Login = () => {
           {isSign ? "Sign In" : "Sign Up"}
         </button>
         <button
-          className="font-semibold text-red-500"
+          className="font-semibold text-lime-600"
           onClick={toggleSignInForm}
         >
           {!isSign
@@ -105,10 +117,11 @@ const Login = () => {
         </button>
       </div>
       <img
-        src={finance}
+        src={bg1}
         alt=""
-        className="absolute -left-5 top-40 w-40 md:left-40 md:top-5 md:w-[520px]"
+        className="absolute shadow-md  shadow-black z-[10] -left-5 top-40 w-40 md:left-[360px] md:top-[268px] md:w-[520px]"
       />
+    
     </div>
   );
 };
