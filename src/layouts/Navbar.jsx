@@ -1,22 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import NavLogo from "/src/assets/navlogo.jpeg";
 import { useDispatch } from "react-redux";
 import { removeToken, removeUserData } from "../store/userSlice";
+import Shimmer from "../components/Shimmer";
 
 const Navbar = () => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const activeClass = "text-yellow-400";
 
   const logoutHandler = () => {
-    localStorage.clear();
-    dispatch(removeUserData());
-    dispatch(removeToken());
-    navigate("/");
+    setLoading(true)
+    const timer = setTimeout(() => { 
+      localStorage.clear();
+      dispatch(removeUserData());
+      dispatch(removeToken());
+      navigate("/"); 
+      setLoading(false);
+    }, 1000);
+    
+   
   };
 
-  return (
+  return loading ? <Shimmer/> : (
     <div className="group flex items-center justify-between bg-[#00215E] px-10 py-2">
       <img
         src={NavLogo}
