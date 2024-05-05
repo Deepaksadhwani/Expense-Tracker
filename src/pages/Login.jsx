@@ -26,7 +26,6 @@ const Login = () => {
   };
 
   const validationHandler = async () => {
-    setIsLoading(true);
     const nameValue = name?.current?.value;
     const emailValue = email.current.value;
     const passwordValue = password.current.value;
@@ -34,6 +33,7 @@ const Login = () => {
     console.log(message);
     setError(message);
     if (message) return;
+    setIsLoading(true);
     const postRequestData = JSON.stringify({
       email: emailValue,
       password: passwordValue,
@@ -49,13 +49,13 @@ const Login = () => {
       });
       const data = await response.json();
       console.log(data);
-     
+
       if (!response.ok) {
         setError(data.error.message);
         setIsLoading(false);
-      }else{
+      } else {
         useNavigate("/");
-        setIsLoading(false)
+        setIsLoading(false);
       }
 
       localStorage.setItem("token", data?.idToken);
@@ -70,12 +70,11 @@ const Login = () => {
 
       const data = await response.json();
       console.log(data);
-    
 
       if (!response.ok) {
         setError(data.error.message);
-        setIsLoading(false)
-      }else{
+        setIsLoading(false);
+      } else {
         navigate("/");
         localStorage.setItem("token", data?.idToken);
       }
