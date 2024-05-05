@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import NavLogo from "/src/assets/navlogo.jpeg";
 import { useDispatch } from "react-redux";
-import { addToken } from "../store/userSlice";
+import { removeToken, removeUserData } from "../store/userSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -10,8 +10,9 @@ const Navbar = () => {
   const activeClass = "text-yellow-400";
 
   const logoutHandler = () => {
-    localStorage.removeItem("token");
-    dispatch(addToken());
+    localStorage.clear();
+    dispatch(removeUserData());
+    dispatch(removeToken());
     navigate("/");
   };
 

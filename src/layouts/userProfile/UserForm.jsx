@@ -1,17 +1,27 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { FaGithub } from "react-icons/fa";
 import { RiGlobalLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import useUpdateUserInfo from "../../hooks/useUpdateUserInfo";
 import useGetUserData from "../../hooks/useGetUserData";
 import useVerifyUserEmail from "../../hooks/useVerifyUserEmail";
+import { setUserData } from "../../store/userSlice";
 
 const UserForm = () => {
   const dispatch = useDispatch();
-
   const name = useRef(null);
   const userPhotoUrl = useRef(null);
+
+  const storedUserData = localStorage.getItem("userData");
+  if (storedUserData) {
+    const parseData = JSON.parse(storedUserData);
+    dispatch(setUserData(parseData));
+  }
+
+  
   const userToken = useSelector((store) => store.user.token);
+  const userData = useSelector((store) => store.user.userData);
+  const { displayName, photoUrl } = userData || {};
 
   const userUpdateInfoHandler = async () => {
     const postRequestDataForUpdateUserInfo = JSON.stringify({
@@ -24,13 +34,7 @@ const UserForm = () => {
     useUpdateUserInfo(postRequestDataForUpdateUserInfo);
   };
 
-  useVerifyUserEmail();
-
-  useEffect(() => {
-    useGetUserData(dispatch, userToken);
-  }, []);
-
-  
+  // useVerifyUserEmail();
 
   return (
     <div className="flex-col  border-b border-black">
@@ -45,13 +49,21 @@ const UserForm = () => {
         <div className="flex items-center space-x-4">
           <FaGithub />
           <p>Full Name:</p>
-          <input ref={name} type="text" name="" id="" className="border-2" />
+          <input
+            ref={name}
+            type="text"
+            defaultValue={displayName}
+            name=""
+            id=""
+            className="border-2"
+          />
         </div>
         <div className="flex items-center space-x-4">
           <RiGlobalLine />
 
           <p>Profile Photo URL</p>
           <input
+            defaultValue={photoUrl}
             ref={userPhotoUrl}
             className="border-2"
             type="text"
@@ -61,7 +73,6 @@ const UserForm = () => {
         </div>
       </div>
       <div className="flex justify-between px-10">
-        
         <button onClick={userUpdateInfoHandler} className="ml-[45%] py-4">
           Update
         </button>

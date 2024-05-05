@@ -13,8 +13,11 @@ const userSlice = createSlice({
     removeToken: (state, action) => {
       state.token = null;
     },
+    removeUserData: (state, action) => {
+      state.userData = null;
+    },
   },
 });
 
-export const { addToken, removeToken, setUserData } = userSlice.actions;
+export const { addToken, removeToken, setUserData,removeUserData } = userSlice.actions;
 export default userSlice.reducer;

@@ -1,10 +1,20 @@
 import { useNavigate } from "react-router-dom";
+import useGetUserData from "../hooks/useGetUserData";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const Home = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const userToken = localStorage.getItem("token");
+
   const moveToUserPageHandler = () => {
     navigate("/ProfilePage");
   };
+
+  useGetUserData(dispatch, userToken);
 
   return (
     <div className="flex items-center justify-between bg-cyan-100 px-10">

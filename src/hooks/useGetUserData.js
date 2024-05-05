@@ -1,9 +1,7 @@
-
 import { FIREBASE_KEY, GET_USER_DATA } from "../utils/constants";
 import { setUserData } from "../store/userSlice";
 
-const useGetUserData = (dispatch,userToken) => {
- 
+const useGetUserData = (dispatch, userToken) => {
   const getUserData = async () => {
     const response = await fetch(GET_USER_DATA + FIREBASE_KEY, {
       method: "POST",
@@ -15,10 +13,13 @@ const useGetUserData = (dispatch,userToken) => {
       },
     });
 
-    const data = await response.json();
-    console.log(data?.users[0]);
-    dispatch(setUserData(data?.users[0]));
-    return data;
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data?.users[0]);
+      localStorage.setItem("userData", JSON.stringify(data?.users[0]));
+      const parseData = JSON.parse(localStorage.getItem("userData"));
+      dispatch(setUserData(parseData));
+    }
   };
 
   getUserData();
