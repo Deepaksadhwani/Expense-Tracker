@@ -4,9 +4,8 @@ import NavLogo from "/src/assets/navlogo.jpeg";
 import { useDispatch, useSelector } from "react-redux";
 import { removeToken, removeUserData } from "../store/userSlice";
 import Shimmer from "../components/Shimmer";
-import { BiLogOut } from "react-icons/bi";
-import { MdVerified } from "react-icons/md";
 
+import DropDownMenu from "../components/DropDownMenu";
 const Navbar = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -34,11 +33,11 @@ const Navbar = () => {
   return loading ? (
     <Shimmer />
   ) : (
-    <div className="group relative flex items-center justify-between bg-[#00215E] px-10 py-2">
+    <div  className="group relative flex items-center justify-between bg-[#00215E] px-10 py-2">
       <img
         src={NavLogo}
         alt=""
-        className="w-20 rounded-full shadow-md shadow-cyan-200 transition-all duration-100"
+        className="w-20  rounded-full shadow-md shadow-cyan-200 transition-all duration-100"
       />
       <div>
         <h1 className="text-[0px] font-semibold tracking-tight text-yellow-500 transition-all duration-1000 group-hover:text-3xl ">
@@ -52,41 +51,16 @@ const Navbar = () => {
         >
           Home
         </NavLink>
-        <NavLink
-          className={({ isActive }) => (isActive ? activeClass : undefined)}
-          to="/ProfilePage"
-        >
-          Profile
-        </NavLink>
+       
         <div
           onClick={() => setIsOpen((prev) => !prev)}
           className="flex cursor-pointer  select-none items-center   space-x-3 rounded-full  bg-gray-500 bg-opacity-50 p-1 px-3 font-semibold text-white  transition-all duration-200 hover:scale-[1.04]"
         >
-          <img src={image}  className="w-10 rounded-md" />
+          <img src={image} className="w-14  rounded-full" />
           <p className="">{displayName}</p>
           <span className="text-yellow-500">⮟</span>
         </div>
-        {isOpen && (
-          <div className="absolute z-10 -bottom-16 right-8 flex  w-[200px] flex-col rounded-lg   border-2 border-black  bg-gray-100 p-2  font-semibold text-gray-600  ">
-            <div className="absolute -top-4  right-8 rotate-180 text-gray-100">
-              ⏷
-            </div>
-            <button
-              className=" border-b border-black dropdown"
-              onClick={logoutHandler}
-            >
-              <BiLogOut />
-              Logout
-            </button>
-            <button
-              onClick={() => navigate("/EmailVerification")}
-              className="dropdown"
-            >
-              <MdVerified />
-              Verify Email
-            </button>
-          </div>
-        )}
+        {isOpen && <DropDownMenu onLogOutHandler={logoutHandler}   navigate={navigate}/>}
       </div>
     </div>
   );

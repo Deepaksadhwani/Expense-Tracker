@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { RiGlobalLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +9,6 @@ const UserForm = () => {
   const dispatch = useDispatch();
   const name = useRef(null);
   const userPhotoUrl = useRef(null);
-
   const storedUserData = localStorage.getItem("userData");
   if (storedUserData) {
     const parseData = JSON.parse(storedUserData);
@@ -21,6 +20,8 @@ const UserForm = () => {
   const { displayName, photoUrl } = userData || {};
 
   const userUpdateInfoHandler = async () => {
+    
+
     const postRequestDataForUpdateUserInfo = JSON.stringify({
       idToken: userToken,
       displayName: name.current.value,
@@ -29,9 +30,12 @@ const UserForm = () => {
     });
 
     useUpdateUserInfo(postRequestDataForUpdateUserInfo);
+    
   };
 
-  return (
+  
+
+  return   (
     <div className="flex-col  border-b border-black">
       <div className="border-1 mt-4 flex justify-between px-5">
         <div></div>
