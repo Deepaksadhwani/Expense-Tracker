@@ -6,7 +6,6 @@ import { removeToken, removeUserData } from "../store/userSlice";
 import Shimmer from "../components/Shimmer";
 import { BiLogOut } from "react-icons/bi";
 import { MdVerified } from "react-icons/md";
-import useVerifyUserEmail from "../hooks/useVerifyUserEmail";
 
 const Navbar = () => {
   const [loading, setLoading] = useState(false);
@@ -30,12 +29,6 @@ const Navbar = () => {
       navigate("/");
       setLoading(false);
     }, 1000);
-  };
-
-  const verifyEmailHandler = () => {
-    const verifyUserEmail = useVerifyUserEmail();
-    verifyUserEmail();
-      alert("Complete the verification process, Check your Email.")
   };
 
   return loading ? (
@@ -69,23 +62,26 @@ const Navbar = () => {
           onClick={() => setIsOpen((prev) => !prev)}
           className="flex cursor-pointer  select-none items-center   space-x-3 rounded-full  bg-gray-500 bg-opacity-50 p-1 px-3 font-semibold text-white  transition-all duration-200 hover:scale-[1.04]"
         >
-          <img src={image} alt="" className="w-10 rounded-md" />
+          <img src={image}  className="w-10 rounded-md" />
           <p className="">{displayName}</p>
           <span className="text-yellow-500">⮟</span>
         </div>
         {isOpen && (
-          <div className="absolute -bottom-16 right-8 flex  w-[200px] flex-col rounded-lg   border-2 border-black  bg-gray-100 p-2  font-semibold text-gray-600  ">
+          <div className="absolute z-10 -bottom-16 right-8 flex  w-[200px] flex-col rounded-lg   border-2 border-black  bg-gray-100 p-2  font-semibold text-gray-600  ">
             <div className="absolute -top-4  right-8 rotate-180 text-gray-100">
               ⏷
             </div>
             <button
-              className="duration flex items-center justify-center gap-x-2 border-b  border-black py-1  transition-all hover:scale-[1.05]"
+              className=" border-b border-black dropdown"
               onClick={logoutHandler}
             >
               <BiLogOut />
               Logout
             </button>
-            <button onClick={verifyEmailHandler} className="duration flex items-center justify-center gap-x-2   py-1 transition-all hover:scale-[1.05]">
+            <button
+              onClick={() => navigate("/EmailVerification")}
+              className="dropdown"
+            >
               <MdVerified />
               Verify Email
             </button>

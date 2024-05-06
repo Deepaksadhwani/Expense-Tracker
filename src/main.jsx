@@ -8,6 +8,7 @@ import UserProfile from "./pages/UserProfile.jsx";
 import { Provider } from "react-redux";
 import appStore from "./store/appStore.js";
 import Login from "./pages/Login.jsx";
+import EmailVerify from "./pages/EmailVerify.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ const appRouter = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/ProfilePage", element: <UserProfile /> },
+      { path: "/EmailVerification", element: <EmailVerify /> },
     ],
   },
   { path: "/login", element: <Login /> },
