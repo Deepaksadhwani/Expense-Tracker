@@ -3,8 +3,6 @@ import { FaGithub } from "react-icons/fa";
 import { RiGlobalLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import useUpdateUserInfo from "../../hooks/useUpdateUserInfo";
-import useGetUserData from "../../hooks/useGetUserData";
-import useVerifyUserEmail from "../../hooks/useVerifyUserEmail";
 import { setUserData } from "../../store/userSlice";
 
 const UserForm = () => {
@@ -18,7 +16,6 @@ const UserForm = () => {
     dispatch(setUserData(parseData));
   }
 
-  
   const userToken = useSelector((store) => store.user.token);
   const userData = useSelector((store) => store.user.userData);
   const { displayName, photoUrl } = userData || {};
@@ -33,8 +30,6 @@ const UserForm = () => {
 
     useUpdateUserInfo(postRequestDataForUpdateUserInfo);
   };
-
-  // useVerifyUserEmail();
 
   return (
     <div className="flex-col  border-b border-black">

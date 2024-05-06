@@ -15,9 +15,8 @@ const Home = () => {
     navigate("/ProfilePage");
   };
 
-  useGetUserData(dispatch, userToken);
-
   useEffect(() => {
+    useGetUserData(dispatch, userToken);
     const timer = setTimeout(() => {
       setLoading(false);
     }, 1000);
