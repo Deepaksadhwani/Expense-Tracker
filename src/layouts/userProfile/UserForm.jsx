@@ -27,7 +27,7 @@ const UserForm = ({ onLoading }) => {
 
     const timer = setTimeout(() => {
       onLoading(false);
-    }, 500);
+    }, 700);
   };
 
   useEffect(()=> {

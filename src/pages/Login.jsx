@@ -81,25 +81,8 @@ const Login = () => {
     }
   };
 
-  const forgetPasswordHandler = async () => {
-    setIsLoading(true);
-    const response = await fetch(USER_VERIFY_EMAIL + FIREBASE_KEY, {
-      method: "POST",
-      body: JSON.stringify({
-        requestType: "PASSWORD_RESET",
-        email: email.current.value,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    console.log("from verify email", data);
-    setIsLoading(false);
-    if (!response.ok) {
-      setError(data.error.message);
-      setIsLoading(false);
-    }
+  const forgetPasswordHandler = () => {
+    navigate("/forgetPassword");
   };
 
   useEffect(()=> {

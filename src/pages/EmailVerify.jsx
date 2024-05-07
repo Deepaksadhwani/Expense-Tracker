@@ -10,7 +10,7 @@ const EmailVerify = () => {
   const { emailVerified } = userVerifiedStatus || {};
   const [error, setError] = useState(null);
   const [successfulStatusText, setSuccessfulStatusText] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const verifyUserEmail = async () => {
     setLoading(true);
@@ -40,8 +40,12 @@ const EmailVerify = () => {
 
   useEffect(() => {
     if (!emailVerified) {
+     
       verifyUserEmail();
     } else {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 500);
       setSuccessfulStatusText("Your Email Is Already Verified.");
     }
   }, []);

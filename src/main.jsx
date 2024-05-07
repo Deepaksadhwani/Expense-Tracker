@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import appStore from "./store/appStore.js";
 import Login from "./pages/Login.jsx";
 import EmailVerify from "./pages/EmailVerify.jsx";
+import ForgotPassword from "./pages/ForgetPassword.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const appRouter = createBrowserRouter([
     ],
   },
   { path: "/login", element: <Login /> },
+  {path: "/forgetPassword", element: <ForgotPassword/>}
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={appStore}>

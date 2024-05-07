@@ -27,7 +27,7 @@ const Navbar = () => {
       dispatch(removeToken());
       navigate("/");
       setLoading(false);
-    }, 1000);
+    }, 700);
   };
 
   return loading ? (
