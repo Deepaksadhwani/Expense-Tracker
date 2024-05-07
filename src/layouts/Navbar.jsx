@@ -54,7 +54,7 @@ const Navbar = () => {
        
         <div
           onClick={() => setIsOpen((prev) => !prev)}
-          className="flex cursor-pointer  select-none items-center   space-x-3 rounded-full  bg-gray-500 bg-opacity-50 p-1 px-3 font-semibold text-white  transition-all duration-200 hover:scale-[1.04]"
+          className="flex cursor-pointer  select-none items-center   space-x-3 rounded-full  bg-black bg-opacity-20 border border-yellow-400 p-1 px-3 font-semibold text-white  transition-all duration-200 hover:scale-[1.04]"
         >
           <img src={image} className="w-14  rounded-full" />
           <p className="">{displayName}</p>

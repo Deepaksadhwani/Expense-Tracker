@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { checkValidData } from "../utils/validate";
 import {
   FIREBASE_KEY,
@@ -59,8 +59,6 @@ const Login = () => {
         setIsLoading(false);
         localStorage.setItem("token", data?.idToken);
       }
-
-     
     } else {
       const response = await fetch(USER_SIGN_IN + FIREBASE_KEY, {
         method: "POST",
@@ -104,16 +102,25 @@ const Login = () => {
     }
   };
 
+  useEffect(()=> {
+    const userToken = localStorage.getItem("token");
+    if (userToken) {
+      dispatch(addToken(userToken));
+      navigate("/");
+    }
+  },[]);
+
   //tailwind conditional styling
   const bgColor = isSign
     ? "flex w-[90%]  flex-col  items-center space-y-3 rounded-md border-2 border-gray-200 bg-white py-20 shadow-md shadow-black  md:mb-[5%] md:ml-[35%]  md:w-[20%] md:py-[42px]  "
     : "flex w-[90%]  flex-col  items-center space-y-3 rounded-md border-2 border-gray-200 bg-gray-900 py-20 shadow-md shadow-black  md:mb-[5%] md:ml-[35%]  md:w-[20%] md:py-4 ";
-  const userToken = localStorage.getItem("token");
-  dispatch(addToken(userToken));
-  
-  return isLoading ? <Shimmer /> : (
+ 
+
+  return isLoading ? (
+    <Shimmer />
+  ) : (
     <div className="relative z-10 flex h-screen items-center  justify-center bg-gradient-to-br from-black via-gray-700 to-black md:items-end ">
-      <TypingAnimation/>
+      <TypingAnimation />
       <div className={bgColor}>
         <h1 className="mb-10 font-Mont text-3xl font-semibold text-blue-500  md:mb-0 ">
           {isSign ? "Sign In" : "Sign Up"}
@@ -163,7 +170,7 @@ const Login = () => {
       <img
         src={bg1}
         alt=""
-        className="absolute -left-5  top-40 z-[10] w-40 shadow-md shadow-black md:block hidden md:left-[360px] md:top-[268px] md:w-[520px]"
+        className="absolute -left-5  top-40 z-[10] hidden w-40 shadow-md shadow-black md:left-[360px] md:top-[268px] md:block md:w-[520px]"
       />
     </div>
   );
