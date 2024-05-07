@@ -33,11 +33,11 @@ const Navbar = () => {
   return loading ? (
     <Shimmer />
   ) : (
-    <div  className="group relative flex items-center justify-between bg-[#00215E] px-10 py-2">
+    <div className="group relative flex items-center justify-between bg-[#00215E] px-10 py-2">
       <img
         src={NavLogo}
         alt=""
-        className="w-20  rounded-full shadow-md shadow-cyan-200 transition-all duration-100"
+        className="w-20  rounded-full shadow-md  shadow-cyan-200 transition-all duration-100"
       />
       <div>
         <h1 className="text-[0px] font-semibold tracking-tight text-yellow-500 transition-all duration-1000 group-hover:text-3xl ">
@@ -48,19 +48,30 @@ const Navbar = () => {
         <NavLink
           to="/"
           className={({ isActive }) => (isActive ? activeClass : undefined)}
+          onClick={() => setIsOpen(false)}
         >
           Home
         </NavLink>
-       
+        <img
+          src={image}
+          className="m-1 h-14 w-16 rounded-lg border  border-gray-700 object-cover"
+        />
         <div
           onClick={() => setIsOpen((prev) => !prev)}
-          className="flex cursor-pointer  select-none items-center   space-x-3 rounded-full  bg-black bg-opacity-20 border border-yellow-400 p-1 px-3 font-semibold text-white  transition-all duration-200 hover:scale-[1.04]"
+          className="group/testing flex  cursor-pointer select-none items-center space-x-3  rounded-md border-2   border-black bg-yellow-300  px-3 py-3  font-semibold text-[#00215E] transition-all duration-200 hover:scale-[1.04]"
         >
-          <img src={image} className="w-16 h-11 m-1" />
           <p className="">{displayName}</p>
-          <span className="text-yellow-500">⮟</span>
+          <span className=" duration-700  group-hover/testing:rotate-180">
+            ⮟
+          </span>
         </div>
-        {isOpen && <DropDownMenu onLogOutHandler={logoutHandler}   navigate={navigate}/>}
+        {isOpen && (
+          <DropDownMenu
+            onLogOutHandler={logoutHandler}
+            ontoggleDropMenu={setIsOpen}
+            navigate={navigate}
+          />
+        )}
       </div>
     </div>
   );

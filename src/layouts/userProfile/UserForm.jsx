@@ -1,20 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { FaGithub } from "react-icons/fa";
 import { RiGlobalLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import useUpdateUserInfo from "../../hooks/useUpdateUserInfo";
-import { setUserData } from "../../store/userSlice";
 import useGetUserData from "../../hooks/useGetUserData";
 
 const UserForm = ({ onLoading }) => {
   const dispatch = useDispatch();
   const name = useRef(null);
   const userPhotoUrl = useRef(null);
-  const storedUserData = localStorage.getItem("userData");
-  if (storedUserData) {
-    const parseData = JSON.parse(storedUserData);
-    dispatch(setUserData(parseData));
-  }
 
   const userToken = useSelector((store) => store.user.token);
   const userData = useSelector((store) => store.user.userData);
@@ -30,12 +24,15 @@ const UserForm = ({ onLoading }) => {
     });
 
     useUpdateUserInfo(postRequestDataForUpdateUserInfo);
-    useGetUserData(dispatch, userToken);
+
     const timer = setTimeout(() => {
       onLoading(false);
-    }, 1000);
+    }, 500);
   };
 
+  useEffect(()=> {
+    useGetUserData(dispatch, userToken)
+  },[]);
   return (
     <div className="flex-col  border-b border-black">
       <div className="border-1 mt-4 flex justify-between px-5">
@@ -73,7 +70,10 @@ const UserForm = ({ onLoading }) => {
         </div>
       </div>
       <div className="flex justify-between px-10">
-        <button onClick={userUpdateInfoHandler} className="ml-[45%] py-4">
+        <button
+          onClick={userUpdateInfoHandler}
+          className="my-4 ml-[45%] btn"
+        >
           Update
         </button>
       </div>
