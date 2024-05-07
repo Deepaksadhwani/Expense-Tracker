@@ -4,8 +4,9 @@ import { RiGlobalLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import useUpdateUserInfo from "../../hooks/useUpdateUserInfo";
 import { setUserData } from "../../store/userSlice";
+import useGetUserData from "../../hooks/useGetUserData";
 
-const UserForm = () => {
+const UserForm = ({ onLoading }) => {
   const dispatch = useDispatch();
   const name = useRef(null);
   const userPhotoUrl = useRef(null);
@@ -20,8 +21,7 @@ const UserForm = () => {
   const { displayName, photoUrl } = userData || {};
 
   const userUpdateInfoHandler = async () => {
-    
-
+    onLoading(true);
     const postRequestDataForUpdateUserInfo = JSON.stringify({
       idToken: userToken,
       displayName: name.current.value,
@@ -30,12 +30,13 @@ const UserForm = () => {
     });
 
     useUpdateUserInfo(postRequestDataForUpdateUserInfo);
-    
+    useGetUserData(dispatch, userToken);
+    const timer = setTimeout(() => {
+      onLoading(false);
+    }, 1000);
   };
 
-  
-
-  return   (
+  return (
     <div className="flex-col  border-b border-black">
       <div className="border-1 mt-4 flex justify-between px-5">
         <div></div>

@@ -5,6 +5,7 @@
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+      
       const timer = setTimeout(() => {
         setLoading(false);
       }, 1000);
@@ -21,7 +22,7 @@
           </p>
         </div>
         
-        { loading ? <Shimmer/> : <UserForm /> }
+        { loading ? <Shimmer/> : <UserForm onLoading={setLoading}/> }
       </div>
     );
   };
