@@ -33,15 +33,15 @@ const Navbar = () => {
   return loading ? (
     <Shimmer />
   ) : (
-    <div className="group relative flex items-center justify-between bg-[#00215E] px-10 py-2">
-      <img
-        src={NavLogo}
-        alt=""
-        className="w-20  rounded-full shadow-md  shadow-cyan-200 transition-all duration-100"
-      />
-      <div>
-        <h1 className="text-[0px] font-semibold tracking-tight text-yellow-500 transition-all duration-1000 group-hover:text-3xl ">
-          Welcome Expense Tracker
+    <div className="relative flex items-center justify-between bg-[#00215E] px-10 py-2">
+      <div className="flex  items-center space-x-4">
+        <img
+          src={NavLogo}
+          alt=""
+          className="w-20  rounded-full shadow-md  shadow-cyan-200 transition-all duration-100"
+        />
+        <h1 className="text-4xl font-semibold italic tracking-tight text-yellow-500 transition-all duration-1000 ">
+          Expense Tracker
         </h1>
       </div>
       <div className="flex  items-center space-x-3 text-xl font-semibold text-white ">
