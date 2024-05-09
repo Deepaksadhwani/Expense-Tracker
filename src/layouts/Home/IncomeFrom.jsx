@@ -3,7 +3,8 @@ import usePostExpenseData from "../../hooks/usePostExpenseData";
 import useGetExpenseData from "../../hooks/useGetExpenseData";
 import Shimmer from "../../components/Shimmer";
 import { useDispatch, useSelector } from "react-redux";
-const ExpenseForm = ({ onToggleExpenseModal }) => {
+const IncomeForm = ({ onToggleIncomeModal }) => {
+    
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [expenseData, setExpenseData] = useState([]);
@@ -25,7 +26,7 @@ const ExpenseForm = ({ onToggleExpenseModal }) => {
 
     console.log(data);
     usePostExpenseData(data, setLoading);
-    onToggleExpenseModal(false);
+    onToggleIncomeModal(false);
   };
   console.log(expenseData);
 
@@ -41,7 +42,7 @@ const ExpenseForm = ({ onToggleExpenseModal }) => {
       <div className="relative w-full max-w-lg rounded-lg bg-white p-8 shadow-lg">
         <button
           className="absolute right-4 top-4 text-gray-500 hover:text-gray-700 focus:outline-none"
-          onClick={() => onToggleExpenseModal(false)}
+          onClick={() => onToggleIncomeModal(false)}
         >
           <svg className="h-6 w-6" fill="none" stroke="currentColor">
             <path
@@ -53,7 +54,7 @@ const ExpenseForm = ({ onToggleExpenseModal }) => {
           </svg>
         </button>
         <h2 className="mb-6 text-center   text-3xl font-semibold tracking-tight text-blue-900">
-          Enter Expense
+          Enter Income
         </h2>
         <form onSubmit={handleSubmit} className="flex flex-col items-center">
           <div className="mb-4 w-full">
@@ -82,9 +83,9 @@ const ExpenseForm = ({ onToggleExpenseModal }) => {
               className="focus:shadow-outline w-full appearance-none rounded border border-gray-400 px-3 py-2 leading-tight text-gray-700 focus:border-indigo-500 focus:outline-none"
               ref={category}
             >
-              <option value="Food">Food</option>
-              <option value="Petrol">Petrol</option>
-              <option value="other">Other</option>
+              <option value="Salary">Salary</option>
+              <option value="Freelance">Freelance</option>
+              <option value="Investment">Investment</option>
             </select>
           </div>
           <div className="mb-6 w-full">
@@ -111,4 +112,4 @@ const ExpenseForm = ({ onToggleExpenseModal }) => {
   );
 };
 
-export default ExpenseForm;
+export default IncomeForm;

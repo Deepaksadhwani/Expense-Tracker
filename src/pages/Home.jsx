@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import ExpenseForm from "../layouts/Home/ExpenseForm";
 import { setUserData } from "../store/userSlice";
 import ExpenseCards from "../layouts/Home/ExpenseCards";
+import IncomeForm from "../layouts/Home/IncomeFrom";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
   const [incomeModalFormVisible, setIncomeModalFormVisible] = useState(false);
+  const [expenseModalFormVisible, setExpenseModalFormVisible] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -51,11 +53,14 @@ const Home = () => {
         </div>
       ) : null}
       <div>
-        <ExpenseCards onToggleIncomeModal={setIncomeModalFormVisible} />
+        <ExpenseCards onToggleIncomeModal={setIncomeModalFormVisible} onToggleExpenseModal={setExpenseModalFormVisible} />
       </div>
       <div>
         {incomeModalFormVisible && (
-          <ExpenseForm onToggleIncomeModal={setIncomeModalFormVisible} />
+          <IncomeForm onToggleIncomeModal={setIncomeModalFormVisible} />
+        )}
+        {expenseModalFormVisible && (
+          <ExpenseForm onToggleExpenseModal={setExpenseModalFormVisible} />
         )}
       </div>
     </div>

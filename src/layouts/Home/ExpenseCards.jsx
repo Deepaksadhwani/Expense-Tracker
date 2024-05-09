@@ -1,7 +1,8 @@
 import { Card, Row } from "antd";
-import React from "react";
+import React, { useState } from "react";
+import Shimmer from "../../components/Shimmer";
 
-const ExpenseCards = ({ onToggleIncomeModal }) => {
+const ExpenseCards = ({ onToggleIncomeModal,onToggleExpenseModal }) => {
   return (
     <div className="py-10">
       <Row className="mx-[2rem]  flex  flex-wrap items-center justify-evenly">
@@ -18,16 +19,19 @@ const ExpenseCards = ({ onToggleIncomeModal }) => {
           className="min-w-[400px] space-y-2 py-2 shadow-xl"
         >
           <p className="py-2">$0</p>
-          <button className="b-btn w-full">Add Income</button>
+          <button
+            onClick={() => onToggleIncomeModal(true)}
+            className="b-btn w-full"
+          >
+            Add Income
+          </button>
         </Card>
         <Card
           title="Total Expenses"
           className="min-w-[400px] space-y-2 py-2 shadow-xl"
         >
           <p className="py-2">$0</p>
-          <button onClick={()=> onToggleIncomeModal(true)} className="b-btn w-full">
-            Add Expense
-          </button>
+          <button onClick={() => onToggleExpenseModal(true)} className="b-btn w-full">Add Expense</button>
         </Card>
       </Row>
     </div>
