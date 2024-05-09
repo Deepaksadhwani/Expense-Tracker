@@ -5,6 +5,7 @@ import Shimmer from "../components/Shimmer";
 import { useEffect, useState } from "react";
 import ExpenseForm from "../layouts/Home/ExpenseForm";
 import { setUserData } from "../store/userSlice";
+import { parse } from "postcss";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -14,8 +15,7 @@ const Home = () => {
 
   const userToken = localStorage.getItem("token");
   const  parseData = JSON.parse(localStorage.getItem("userData"));
-
-  dispatch(setUserData(parseData));
+  const updatedProfileStatus = parseData?.displayName
   const moveToUserPageHandler = () => {
     navigate("/ProfilePage");
   };
@@ -34,7 +34,7 @@ const Home = () => {
     <Shimmer />
   ) : (
     <div>
-      <div className="flex items-center justify-between bg-cyan-100 px-10">
+     {!updatedProfileStatus ?  <div className="flex items-center justify-between bg-cyan-100 px-10">
         <h1>Welcome to expense tracker</h1>
         <div className="flex items-center space-x-2 rounded-full bg-slate-400 ">
           <p className="select-none rounded-full p-1">
@@ -47,7 +47,7 @@ const Home = () => {
             complete Now
           </button>
         </div>
-      </div>
+      </div> : null}
       <div>
         <ExpenseForm/>
       </div>
