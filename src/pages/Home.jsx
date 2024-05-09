@@ -4,14 +4,18 @@ import { useDispatch } from "react-redux";
 import Shimmer from "../components/Shimmer";
 import { useEffect, useState } from "react";
 import ExpenseForm from "../layouts/Home/ExpenseForm";
+import { setUserData } from "../store/userSlice";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const userToken = localStorage.getItem("token");
 
+  const userToken = localStorage.getItem("token");
+  const  parseData = JSON.parse(localStorage.getItem("userData"));
+
+  dispatch(setUserData(parseData));
   const moveToUserPageHandler = () => {
     navigate("/ProfilePage");
   };
@@ -21,7 +25,9 @@ const Home = () => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 700);
-
+    if (parseData){
+      dispatch(setUserData(parseData))
+    }
     return () => clearTimeout(timer);
   }, []);
   return loading ? (
