@@ -5,7 +5,6 @@ import Shimmer from "../components/Shimmer";
 import { useEffect, useState } from "react";
 import ExpenseForm from "../layouts/Home/ExpenseForm";
 import { setUserData } from "../store/userSlice";
-import { parse } from "postcss";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
