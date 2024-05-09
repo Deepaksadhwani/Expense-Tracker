@@ -9,4 +9,5 @@ export const GET_USER_DATA =
   "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=";
 export const USER_VERIFY_EMAIL =
   "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=";
-
+export const DATABASE_URL =
+  "https://deepak-expense-tracker-default-rtdb.firebaseio.com/";
