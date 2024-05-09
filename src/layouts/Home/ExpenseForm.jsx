@@ -1,40 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import usePostExpenseData from "../../hooks/usePostExpenseData";
 import useGetExpenseData from "../../hooks/useGetExpenseData";
 import Shimmer from "../../components/Shimmer";
+import { useDispatch, useSelector } from "react-redux";
 const ExpenseForm = () => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const [expense, setExpense] = useState({
-    amount: "",
-    description: "",
-    category: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setExpense((prevExpense) => ({ ...prevExpense, [name]: value }));
-  };
-
+  const [expenseData, setExpenseData] = useState([]);
+  const amount = useRef("");
+  const description = useRef("");
+  const category = useRef("");
+  const expenseDataFromSlice = useSelector((store) => store.expense);
+  if (!expenseDataFromSlice) return;
   const handleSubmit = (e) => {
     e.preventDefault();
-   
-    const data = JSON.stringify(expense);
 
-    usePostExpenseData(data,setLoading);
+    const data = JSON.stringify({
+      amount: amount.current.value,
+      description: description.current.value,
+      category: category.current.value,
+    });
 
-    setExpense({ amount: "", description: "", category: "Food" });
-
+    console.log(data);
+    usePostExpenseData(data, setLoading);
+    console.log(expenseData);
   };
+  console.log(expenseData)
 
   useEffect(() => {
-    const fetchData = async() => {
-      const expenseData  = await useGetExpenseData();
-      console.log(expenseData)
-    }
-    fetchData();
-    
+    useGetExpenseData(dispatch);
+    setExpenseData(expenseDataFromSlice)
   }, []);
-  return loading ? <Shimmer/> : (
+  return loading ? (
+    <Shimmer />
+  ) : (
     <div className="mx-auto max-w-4xl rounded-lg bg-white p-8 shadow-lg">
       <h2 className="mb-6 text-center text-3xl font-semibold text-gray-800">
         Enter Expense
@@ -44,52 +43,30 @@ const ExpenseForm = () => {
         className="flex flex-wrap items-center justify-center"
       >
         <div className="mb-4 mr-4">
-          <label
-            className="mb-2 block text-lg font-bold text-gray-700"
-            htmlFor="amount"
-          >
+          <label className="mb-2 block text-lg font-bold text-gray-700">
             Money Spent:
           </label>
           <input
             className="focus:shadow-outline w-full appearance-none rounded border border-gray-400 px-3 py-2 leading-tight text-gray-700 focus:border-indigo-500 focus:outline-none"
-            id="amount"
-            type="number"
-            name="amount"
-            value={expense.amount}
-            onChange={handleChange}
-            required
+            ref={amount}
           />
         </div>
         <div className="mb-4 mr-4">
-          <label
-            className="mb-2 block text-lg font-bold text-gray-700"
-            htmlFor="description"
-          >
+          <label className="mb-2 block text-lg font-bold text-gray-700">
             Description:
           </label>
           <input
             className="focus:shadow-outline w-full appearance-none rounded border border-gray-400 px-3 py-2 leading-tight text-gray-700 focus:border-indigo-500 focus:outline-none"
-            id="description"
-            type="text"
-            name="description"
-            value={expense.description}
-            onChange={handleChange}
-            required
+            ref={description}
           />
         </div>
         <div className="mb-6 mr-4">
-          <label
-            className="mb-2 block text-lg font-bold text-gray-700"
-            htmlFor="category"
-          >
+          <label className="mb-2 block text-lg font-bold text-gray-700">
             Category:
           </label>
           <select
             className="focus:shadow-outline w-full appearance-none rounded border border-gray-400 px-3 py-2 leading-tight text-gray-700 focus:border-indigo-500 focus:outline-none"
-            id="category"
-            name="category"
-            value={expense.category}
-            onChange={handleChange}
+            ref={category}
           >
             <option value="Food">Food</option>
             <option value="Petrol">Petrol</option>
