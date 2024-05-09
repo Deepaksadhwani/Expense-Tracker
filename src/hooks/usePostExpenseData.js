@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { DATABASE_URL } from "../utils/constants";
 
 const usePostExpenseData = (dataExpense,setLoading) => {
@@ -16,7 +17,7 @@ const usePostExpenseData = (dataExpense,setLoading) => {
 
     console.log(data);
     setLoading(false)
-
+    toast.success("Added Expense Successfully.")
   };
   postExpenseData();
   

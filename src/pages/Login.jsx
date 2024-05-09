@@ -12,6 +12,7 @@ import { addToken } from "../store/userSlice";
 import { useDispatch } from "react-redux";
 import Shimmer from "../components/Shimmer";
 import TypingAnimation from "../components/TypingAnimation";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -58,6 +59,7 @@ const Login = () => {
         navigate("/");
         setIsLoading(false);
         localStorage.setItem("token", data?.idToken);
+        toast.success("Created account Successfully.")
       }
     } else {
       const response = await fetch(USER_SIGN_IN + FIREBASE_KEY, {

@@ -5,16 +5,17 @@ import Shimmer from "../components/Shimmer";
 import { useEffect, useState } from "react";
 import ExpenseForm from "../layouts/Home/ExpenseForm";
 import { setUserData } from "../store/userSlice";
+import ExpenseCards from "../layouts/Home/ExpenseCards";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
+  const [incomeModalFormVisible, setIncomeModalFormVisible] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const userToken = localStorage.getItem("token");
-  const  parseData = JSON.parse(localStorage.getItem("userData"));
-  const updatedProfileStatus = parseData?.displayName
+  const parseData = JSON.parse(localStorage.getItem("userData"));
+  const updatedProfileStatus = parseData?.displayName;
   const moveToUserPageHandler = () => {
     navigate("/ProfilePage");
   };
@@ -24,31 +25,38 @@ const Home = () => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 700);
-    if (parseData){
-      dispatch(setUserData(parseData))
+    if (parseData) {
+      dispatch(setUserData(parseData));
     }
     return () => clearTimeout(timer);
   }, []);
   return loading ? (
     <Shimmer />
   ) : (
-    <div>
-     {!updatedProfileStatus ?  <div className="flex items-center justify-between bg-cyan-100 px-10">
-        <h1>Welcome to expense tracker</h1>
-        <div className="flex items-center space-x-2 rounded-full bg-slate-400 ">
-          <p className="select-none rounded-full p-1">
-            Your profile is incomplete
-          </p>
-          <button
-            onClick={moveToUserPageHandler}
-            className="rounded-full bg-white p-2 "
-          >
-            complete Now
-          </button>
+    <div className="h-screen bg-gray-50">
+      {!updatedProfileStatus ? (
+        <div className="flex items-center justify-between bg-cyan-100 px-10">
+          <h1>Welcome to expense tracker</h1>
+          <div className="flex items-center space-x-2 rounded-full bg-slate-400 ">
+            <p className="select-none rounded-full p-1">
+              Your profile is incomplete
+            </p>
+            <button
+              onClick={moveToUserPageHandler}
+              className="rounded-full bg-white p-2 "
+            >
+              complete Now
+            </button>
+          </div>
         </div>
-      </div> : null}
+      ) : null}
       <div>
-        <ExpenseForm/>
+        <ExpenseCards onToggleIncomeModal={setIncomeModalFormVisible} />
+      </div>
+      <div>
+        {incomeModalFormVisible && (
+          <ExpenseForm onToggleIncomeModal={setIncomeModalFormVisible} />
+        )}
       </div>
     </div>
   );
