@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from "react";
+import usePostExpenseData from "../../hooks/usePostExpenseData";
+import useGetExpenseData from "../../hooks/useGetExpenseData";
+import Shimmer from "../../components/Shimmer";
 const ExpenseForm = () => {
+  const [loading, setLoading] = useState(false);
   const [expense, setExpense] = useState({
-    amount: '',
-    description: '',
-    category: '', 
+    amount: "",
+    description: "",
+    category: "",
   });
 
   const handleChange = (e) => {
@@ -14,28 +17,41 @@ const ExpenseForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(expense);
-    setExpense({ amount: '', description: '', category: 'Food' });
+   
+    const data = JSON.stringify(expense);
+
+    usePostExpenseData(data,setLoading);
+
+    setExpense({ amount: "", description: "", category: "Food" });
+
   };
 
-  return (
-    <div className="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-lg">
-      <h2 className="text-3xl font-semibold mb-6 text-center text-gray-800">
+  useEffect(() => {
+    const fetchData = async() => {
+      const expenseData  = await useGetExpenseData();
+      console.log(expenseData)
+    }
+    fetchData();
+    
+  }, []);
+  return loading ? <Shimmer/> : (
+    <div className="mx-auto max-w-4xl rounded-lg bg-white p-8 shadow-lg">
+      <h2 className="mb-6 text-center text-3xl font-semibold text-gray-800">
         Enter Expense
       </h2>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-wrap justify-center items-center"
+        className="flex flex-wrap items-center justify-center"
       >
         <div className="mb-4 mr-4">
           <label
-            className="block text-gray-700 text-lg font-bold mb-2"
+            className="mb-2 block text-lg font-bold text-gray-700"
             htmlFor="amount"
           >
             Money Spent:
           </label>
           <input
-            className="appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-indigo-500"
+            className="focus:shadow-outline w-full appearance-none rounded border border-gray-400 px-3 py-2 leading-tight text-gray-700 focus:border-indigo-500 focus:outline-none"
             id="amount"
             type="number"
             name="amount"
@@ -46,13 +62,13 @@ const ExpenseForm = () => {
         </div>
         <div className="mb-4 mr-4">
           <label
-            className="block text-gray-700 text-lg font-bold mb-2"
+            className="mb-2 block text-lg font-bold text-gray-700"
             htmlFor="description"
           >
             Description:
           </label>
           <input
-            className="appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-indigo-500"
+            className="focus:shadow-outline w-full appearance-none rounded border border-gray-400 px-3 py-2 leading-tight text-gray-700 focus:border-indigo-500 focus:outline-none"
             id="description"
             type="text"
             name="description"
@@ -63,13 +79,13 @@ const ExpenseForm = () => {
         </div>
         <div className="mb-6 mr-4">
           <label
-            className="block text-gray-700 text-lg font-bold mb-2"
+            className="mb-2 block text-lg font-bold text-gray-700"
             htmlFor="category"
           >
             Category:
           </label>
           <select
-            className="appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-indigo-500"
+            className="focus:shadow-outline w-full appearance-none rounded border border-gray-400 px-3 py-2 leading-tight text-gray-700 focus:border-indigo-500 focus:outline-none"
             id="category"
             name="category"
             value={expense.category}
@@ -82,7 +98,7 @@ const ExpenseForm = () => {
         </div>
         <div className="mt-2">
           <button
-            className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="focus:shadow-outline rounded bg-indigo-500 px-4 py-2 font-bold text-white hover:bg-indigo-700 focus:outline-none"
             type="submit"
           >
             Submit
