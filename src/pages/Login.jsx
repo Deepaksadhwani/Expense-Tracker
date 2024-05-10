@@ -12,6 +12,7 @@ import { addToken } from "../store/userSlice";
 import { useDispatch } from "react-redux";
 import Shimmer from "../components/Shimmer";
 import TypingAnimation from "../components/TypingAnimation";
+import useGetExpenseData from "../hooks/useGetExpenseData";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -85,19 +86,20 @@ const Login = () => {
     navigate("/forgetPassword");
   };
 
-  useEffect(()=> {
+  useEffect(() => {
+    useGetExpenseData(dispatch);
     const userToken = localStorage.getItem("token");
+    
     if (userToken) {
       dispatch(addToken(userToken));
       navigate("/");
     }
-  },[]);
+  }, []);
 
   //tailwind conditional styling
   const bgColor = isSign
     ? "flex w-[90%]  flex-col  items-center space-y-3 rounded-md border-2 border-gray-200 bg-white py-20 shadow-md shadow-black  md:mb-[5%] md:ml-[35%]  md:w-[20%] md:py-[42px]  "
     : "flex w-[90%]  flex-col  items-center space-y-3 rounded-md border-2 border-gray-200 bg-gray-900 py-20 shadow-md shadow-black  md:mb-[5%] md:ml-[35%]  md:w-[20%] md:py-4 ";
- 
 
   return isLoading ? (
     <Shimmer />

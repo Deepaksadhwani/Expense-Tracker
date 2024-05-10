@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { FIREBASE_KEY, USER_UPDATE_INFO } from "../utils/constants";
 
 const useUpdateUserInfo = async (postRequestDataForUpdateUserInfo) => {
@@ -11,6 +12,9 @@ const useUpdateUserInfo = async (postRequestDataForUpdateUserInfo) => {
 
   if (response.ok) {
     const data = await response.json();
+    toast.success("User profile is updated.", {
+      duration: 2000,
+    });
     console.log(data);
   }
 };
