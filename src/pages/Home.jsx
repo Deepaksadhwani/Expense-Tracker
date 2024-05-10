@@ -7,6 +7,7 @@ import ExpenseForm from "../layouts/Home/ExpenseForm";
 import { setUserData } from "../store/userSlice";
 import ExpenseCards from "../layouts/Home/ExpenseCards";
 import IncomeForm from "../layouts/Home/IncomeFrom";
+import useGetExpenseData from "../hooks/useGetExpenseData";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -23,6 +24,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    useGetExpenseData(dispatch);
     useGetUserData(dispatch, userToken);
     const timer = setTimeout(() => {
       setLoading(false);
@@ -53,7 +55,10 @@ const Home = () => {
         </div>
       ) : null}
       <div>
-        <ExpenseCards onToggleIncomeModal={setIncomeModalFormVisible} onToggleExpenseModal={setExpenseModalFormVisible} />
+        <ExpenseCards
+          onToggleIncomeModal={setIncomeModalFormVisible}
+          onToggleExpenseModal={setExpenseModalFormVisible}
+        />
       </div>
       <div>
         {incomeModalFormVisible && (

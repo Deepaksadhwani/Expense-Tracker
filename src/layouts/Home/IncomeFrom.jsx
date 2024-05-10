@@ -4,7 +4,6 @@ import useGetExpenseData from "../../hooks/useGetExpenseData";
 import Shimmer from "../../components/Shimmer";
 import { useDispatch, useSelector } from "react-redux";
 const IncomeForm = ({ onToggleIncomeModal }) => {
-    
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [expenseData, setExpenseData] = useState([]);
@@ -31,7 +30,6 @@ const IncomeForm = ({ onToggleIncomeModal }) => {
   console.log(expenseData);
 
   useEffect(() => {
-    useGetExpenseData(dispatch);
     setExpenseData(expenseDataFromSlice);
   }, []);
   return loading ? (

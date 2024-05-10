@@ -30,7 +30,6 @@ const ExpenseForm = ({ onToggleExpenseModal }) => {
   console.log(expenseData);
 
   useEffect(() => {
-    useGetExpenseData(dispatch);
     setExpenseData(expenseDataFromSlice);
   }, []);
   return loading ? (
