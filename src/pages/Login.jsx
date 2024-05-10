@@ -4,7 +4,6 @@ import {
   FIREBASE_KEY,
   USER_SIGN_IN,
   USER_SIGN_UP,
-  USER_VERIFY_EMAIL,
 } from "../utils/constants";
 import bg1 from "/src/assets/bg1.png";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +11,6 @@ import { addToken } from "../store/userSlice";
 import { useDispatch } from "react-redux";
 import Shimmer from "../components/Shimmer";
 import TypingAnimation from "../components/TypingAnimation";
-import useGetExpenseData from "../hooks/useGetExpenseData";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -87,7 +85,6 @@ const Login = () => {
   };
 
   useEffect(() => {
-    useGetExpenseData(dispatch);
     const userToken = localStorage.getItem("token");
     
     if (userToken) {
