@@ -1,10 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { checkValidData } from "../utils/validate";
-import {
-  FIREBASE_KEY,
-  USER_SIGN_IN,
-  USER_SIGN_UP,
-} from "../utils/constants";
+import { FIREBASE_KEY, USER_SIGN_IN, USER_SIGN_UP } from "../utils/constants";
 import bg1 from "/src/assets/bg1.png";
 import { useNavigate } from "react-router-dom";
 import { addToken } from "../store/userSlice";
@@ -30,7 +26,7 @@ const Login = () => {
     const emailValue = email.current.value;
     const passwordValue = password.current.value;
     const message = checkValidData(nameValue, emailValue, passwordValue);
-    console.log(message);
+
     setError(message);
     if (message) return;
     setIsLoading(true);
@@ -48,7 +44,6 @@ const Login = () => {
         },
       });
       const data = await response.json();
-      console.log(data);
 
       if (!response.ok) {
         setError(data.error.message);
@@ -57,8 +52,7 @@ const Login = () => {
         navigate("/");
         setIsLoading(false);
         localStorage.setItem("token", data?.idToken);
-        localStorage.setItem("email",emailValue)
-
+        localStorage.setItem("email", emailValue);
       }
     } else {
       const response = await fetch(USER_SIGN_IN + FIREBASE_KEY, {
@@ -70,7 +64,6 @@ const Login = () => {
       });
 
       const data = await response.json();
-      console.log(data);
 
       if (!response.ok) {
         setError(data.error.message);
@@ -78,7 +71,7 @@ const Login = () => {
       } else {
         navigate("/");
         localStorage.setItem("token", data?.idToken);
-        localStorage.setItem("email",emailValue)
+        localStorage.setItem("email", emailValue);
       }
     }
   };
@@ -89,7 +82,7 @@ const Login = () => {
 
   useEffect(() => {
     const userToken = localStorage.getItem("token");
-    
+
     if (userToken) {
       dispatch(addToken(userToken));
       navigate("/");

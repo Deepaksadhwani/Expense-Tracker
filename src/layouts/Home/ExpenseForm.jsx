@@ -22,7 +22,7 @@ const ExpenseForm = ({ onSetExpenseData }) => {
       date: date.current.value,
     });
 
-    console.log(data);
+    
     usePostExpenseData(data, setLoading);
 
     setTimeout(() => {

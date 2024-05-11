@@ -15,7 +15,7 @@ const useUpdateUserInfo = async (postRequestDataForUpdateUserInfo) => {
     toast.success("User profile is updated.", {
       duration: 2000,
     });
-    console.log(data);
+  
   }
 };
 

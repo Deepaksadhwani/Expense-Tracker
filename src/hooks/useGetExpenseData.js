@@ -7,7 +7,7 @@ const useGetExpenseData = async (dispatch, setExpenseData) => {
   const response = await fetch(DATABASE_URL + `expense/${email1}.json`);
 
   const data = await response.json();
-  console.log(data);
+
 
   setExpenseData(data);
   dispatch(addExpense(data));

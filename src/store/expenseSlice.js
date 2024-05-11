@@ -7,8 +7,8 @@ const expenseSlice = createSlice({
     addExpense: (state, action) => {
       return action.payload;
     },
-    removeExpense: (state) => {
-      state.length = 0;
+    removeExpense: (state,) => {
+      return []
     },
   },
 });

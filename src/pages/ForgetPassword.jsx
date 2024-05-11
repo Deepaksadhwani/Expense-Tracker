@@ -22,7 +22,7 @@ const ForgotPassword = () => {
       },
     });
     const data = await response.json();
-    console.log("from verify email", data);
+
     setIsLoading(false);
     if (!response.ok) {
       setStatusText(data.error.message);
@@ -30,7 +30,7 @@ const ForgotPassword = () => {
     } else {
       setStatusText("Sent mail on" + data.email);
     }
-    console.log("Email:", email);
+  
   };
 
   return isLoading ? (

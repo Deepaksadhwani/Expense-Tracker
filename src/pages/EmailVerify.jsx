@@ -26,14 +26,14 @@ const EmailVerify = () => {
     });
     const data = await response.json();
     if (response.ok) {
-      console.log(data);
+    
       setSuccessfulStatusText(
         "Verification Email is sent on " + data?.email,
       );
       setLoading(false);
     } else {
       setError("Too many attempts. Try again later.");
-      console.log(data);
+    
       setLoading(false);
     }
   };

@@ -19,7 +19,7 @@ const usePostExpenseData = (dataExpense, setLoading) => {
     if (response.ok) {
       toast.success("Expense entry is Successfully Added.");
     }
-    console.log(data);
+    
     setLoading(false);
   };
   postExpenseData();

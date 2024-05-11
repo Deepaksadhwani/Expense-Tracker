@@ -21,8 +21,6 @@ const useEditExpenseData = async(id,editedData) => {
         toast.success(
           "Expense entry is Successfully Edited."
         )
-      }else{
-        console.log(data)
       }
 
 };

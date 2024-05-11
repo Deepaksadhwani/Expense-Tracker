@@ -6,6 +6,7 @@ import { removeToken, removeUserData } from "../store/userSlice";
 import Shimmer from "../components/Shimmer";
 
 import DropDownMenu from "../components/DropDownMenu";
+import { removeExpense } from "../store/expenseSlice";
 const Navbar = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const Navbar = () => {
       localStorage.clear();
       dispatch(removeUserData());
       dispatch(removeToken());
+      dispatch(removeExpense());
       navigate("/");
       setLoading(false);
     }, 700);

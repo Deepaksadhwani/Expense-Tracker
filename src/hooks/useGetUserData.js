@@ -15,7 +15,7 @@ const useGetUserData = (dispatch, userToken) => {
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data?.users[0]);
+     
       localStorage.setItem("userData", JSON.stringify(data?.users[0]));
       const parseData = JSON.parse(localStorage.getItem("userData"));
       dispatch(setUserData(parseData));
