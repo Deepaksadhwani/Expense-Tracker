@@ -17,9 +17,7 @@ const usePostExpenseData = (dataExpense, setLoading) => {
     const data = await response.json();
 
     if (response.ok) {
-      toast.success("Expense entry Added wait some to reflect it on display.", {
-        duration: 3000,
-      });
+      toast.success("Expense entry is Successfully Added.");
     }
     console.log(data);
     setLoading(false);

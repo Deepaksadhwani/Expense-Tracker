@@ -1,16 +1,17 @@
-import React, {  useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import usePostExpenseData from "../../hooks/usePostExpenseData";
 import Shimmer from "../../components/Shimmer";
 import { useDispatch } from "react-redux";
 import useGetExpenseData from "../../hooks/useGetExpenseData";
 
-const ExpenseForm = ({onSetExpenseData}) => {
+const ExpenseForm = ({ onSetExpenseData }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const amount = useRef("");
   const description = useRef("");
   const category = useRef("");
   const date = useRef("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -23,16 +24,16 @@ const ExpenseForm = ({onSetExpenseData}) => {
 
     console.log(data);
     usePostExpenseData(data, setLoading);
-    useGetExpenseData(dispatch,onSetExpenseData)
-    
+
+    setTimeout(() => {
+      useGetExpenseData(dispatch, onSetExpenseData);
+    }, 500);
   };
 
-
- 
   return loading ? (
     <Shimmer />
   ) : (
-    <div className="mx-auto max-w-4xl rounded-lg bg-white p-8 ">
+    <div className="mx-auto mb-5 mt-5  max-w-4xl rounded-lg bg-white ">
       <h2 className="mb-6 py-2 text-center text-3xl font-semibold text-gray-800">
         Enter Expense
       </h2>
@@ -82,14 +83,13 @@ const ExpenseForm = ({onSetExpenseData}) => {
             className="focus:shadow-outline w-full appearance-none rounded border border-gray-400 px-3 py-2 leading-tight text-gray-700 focus:border-[#00215E] focus:outline-none"
           />
         </div>
-        <div className="mt-2">
-          <button
-            className="focus:shadow-outline mb-4 rounded bg-indigo-500 px-4 py-2 font-bold text-white hover:bg-indigo-700 focus:outline-none"
-            type="submit"
-          >
-            Submit
-          </button>
-        </div>
+
+        <button
+          className="focus:shadow-outline mt-4 rounded bg-indigo-500 px-4 py-2 font-bold text-white hover:bg-indigo-700 focus:outline-none"
+          type="submit"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );

@@ -19,7 +19,7 @@ const useEditExpenseData = async(id,editedData) => {
       const data = await response.json();
       if (response.ok) {
         toast.success(
-          "Expense entry is Successfully Edit, wait some time to update it on display.", {duration:2000}
+          "Expense entry is Successfully Edited."
         )
       }else{
         console.log(data)

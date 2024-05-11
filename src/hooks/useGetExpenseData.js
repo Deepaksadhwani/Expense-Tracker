@@ -10,7 +10,6 @@ const useGetExpenseData = async (dispatch, setExpenseData) => {
   console.log(data);
 
   setExpenseData(data);
-  localStorage.setItem("expenseData", JSON.stringify(data));
   dispatch(addExpense(data));
 };
 

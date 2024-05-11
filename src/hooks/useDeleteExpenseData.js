@@ -3,10 +3,9 @@ import { DATABASE_URL } from "../utils/constants";
 
 const email = localStorage.getItem("email");
 
-const useDeleteExpenseData = (id, onSetLoading) => {
+const useDeleteExpenseData = (id) => {
   const email1 = email.slice(0, -9);
   const deleteExpenseData = async () => {
-    onSetLoading(true);
     const response = await fetch(
       DATABASE_URL + `expense/${email1}/${id}.json`,
       {
@@ -20,11 +19,8 @@ const useDeleteExpenseData = (id, onSetLoading) => {
     const data = await response.json();
     if (response.ok) {
       toast.success(
-        "Expense entry is Successfully Deleted, wait some time to update it on display.",
-        { duration: 2000 },
-      );
+        "Expense  entry is Successfully Deleted.");
     }
-    onSetLoading(false);
   };
   deleteExpenseData();
 };

@@ -1,17 +1,31 @@
 import React, { useRef } from "react";
 import useDeleteExpenseData from "../hooks/useDeleteExpenseData";
-import Shimmer from "./Shimmer";
 import useEditExpenseData from "../hooks/useEditExpenseData";
+import useGetExpenseData from "../hooks/useGetExpenseData";
+import { useDispatch } from "react-redux";
 
-const Card = ({ amount, date, category, description, id, onSetLoading, loading }) => {
+const Card = ({
+  amount,
+  date,
+  category,
+  description,
+  id,
+
+  onSetExpenseData,
+}) => {
   const categoryRef = useRef(null);
   const descriptionRef = useRef(null);
   const dateRef = useRef(null);
   const amountRef = useRef(null);
   const editFormRef = useRef(null);
+  const dispatch = useDispatch();
 
   const deleteExpenseEntry = () => {
-    useDeleteExpenseData(id, onSetLoading);
+    useDeleteExpenseData(id);
+
+    setTimeout(() => {
+      useGetExpenseData(dispatch, onSetExpenseData);
+    }, 500);
   };
 
   const editExpenseDataHandler = () => {
@@ -24,24 +38,65 @@ const Card = ({ amount, date, category, description, id, onSetLoading, loading }
       amount: amountRef.current.value,
       date: dateRef.current.value,
       category: categoryRef.current.value,
-      description: descriptionRef.current.value
+      description: descriptionRef.current.value,
     });
-    
-    useEditExpenseData(id,updatedData)
-    editFormRef.current.style.display = "none"; 
+
+    useEditExpenseData(id, updatedData);
+    editFormRef.current.style.display = "none";
+    setTimeout(() => {
+      useGetExpenseData(dispatch, onSetExpenseData);
+    }, 500);
   };
 
-  return loading ? (
-    <Shimmer />
-  ) : (
-    <div className="mx-auto my-2 flex w-[300px] flex-col overflow-hidden rounded-lg bg-white shadow-lg">
-      <form ref={editFormRef} onSubmit={handleSubmit} style={{ display: "none" }} className="px-6 py-4">
-        <input ref={categoryRef} type="text" className="border rounded-lg px-3 py-2 w-full mb-2" defaultValue={category} placeholder="Category" />
-        <input ref={descriptionRef} type="text" className="border rounded-lg px-3 py-2 w-full mb-2" defaultValue={description} placeholder="Description" />
-        <input ref={dateRef} type="date" className="border rounded-lg px-3 py-2 w-full mb-2" defaultValue={date} placeholder="Date" />
-        <input ref={amountRef} type="number" className="border rounded-lg px-3 py-2 w-full mb-2" defaultValue={amount} placeholder="Amount" />
-        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mr-2">Save</button>
-        <button type="button" onClick={() => editFormRef.current.style.display = "none"} className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg">Cancel</button>
+  return (
+    <div className="mx-auto my-2 flex w-[300px] flex-col overflow-hidden rounded-lg bg-white shadow-lg   hover:scale-105 transition-all duration-300">
+      <form
+        ref={editFormRef}
+        onSubmit={handleSubmit}
+        style={{ display: "none" }}
+        className="px-6 py-4"
+      >
+        <input
+          ref={categoryRef}
+          type="text"
+          className="mb-2 w-full rounded-lg border px-3 py-2"
+          defaultValue={category}
+          placeholder="Category"
+        />
+        <input
+          ref={descriptionRef}
+          type="text"
+          className="mb-2 w-full rounded-lg border px-3 py-2"
+          defaultValue={description}
+          placeholder="Description"
+        />
+        <input
+          ref={dateRef}
+          type="date"
+          className="mb-2 w-full rounded-lg border px-3 py-2"
+          defaultValue={date}
+          placeholder="Date"
+        />
+        <input
+          ref={amountRef}
+          type="number"
+          className="mb-2 w-full rounded-lg border px-3 py-2"
+          defaultValue={amount}
+          placeholder="Amount"
+        />
+        <button
+          type="submit"
+          className="mr-2 rounded-lg bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600"
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          onClick={() => (editFormRef.current.style.display = "none")}
+          className="rounded-lg bg-gray-500 px-4 py-2 font-semibold text-white hover:bg-gray-600"
+        >
+          Cancel
+        </button>
       </form>
       <div className="px-6 py-4">
         <div className="mb-2 text-xl font-bold text-indigo-500">{category}</div>
