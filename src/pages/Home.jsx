@@ -12,7 +12,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const ExpenseArray = useState([]);  
   const userToken = localStorage.getItem("token");
   const parseData = JSON.parse(localStorage.getItem("userData"));
   const [expenseData, setExpenseData] = useState("");
@@ -20,6 +20,8 @@ const Home = () => {
   const moveToUserPageHandler = () => {
     navigate("/ProfilePage");
   };
+
+  
 
   useEffect(() => {
     useGetExpenseData(dispatch, setExpenseData);

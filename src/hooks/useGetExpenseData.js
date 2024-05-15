@@ -9,6 +9,7 @@ const useGetExpenseData = async (dispatch, setExpenseData) => {
   const data = await response.json();
 
 
+
   setExpenseData(data);
   dispatch(addExpense(data));
 };
