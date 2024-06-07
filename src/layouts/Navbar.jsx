@@ -66,7 +66,7 @@ const Navbar = () => {
           Expense Tracker
         </h1>
       </div>
-      {!loading && Object.values(expenseData).length > 0 && (
+      {!loading && expenseData && (
         <button
           className="rounded-lg bg-blue-500 p-2 font-bold text-white transition-all duration-300 hover:bg-blue-700"
           onClick={handleDownloadExpenseFile}
