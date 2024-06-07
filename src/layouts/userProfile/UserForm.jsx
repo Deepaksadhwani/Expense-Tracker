@@ -22,27 +22,26 @@ const UserForm = ({ onLoading }) => {
       photoUrl: userPhotoUrl.current.value,
       returnSecureToken: true,
     });
-
     useUpdateUserInfo(postRequestDataForUpdateUserInfo);
-
     const timer = setTimeout(() => {
       onLoading(false);
     }, 700);
   };
 
-  useEffect(()=> {
-    useGetUserData(dispatch, userToken)
-  },[]);
+  useEffect(() => {
+    useGetUserData(dispatch, userToken);
+  }, []);
+
   return (
-    <div className="flex-col  border-b border-black">
-      <div className="border-1 mt-4 flex justify-between px-5">
+    <div className="flex flex-col py-2 border-b border-black">
+      <div className="mt-4 flex justify-between px-5 border-1">
         <div></div>
         <h2>Contact Details</h2>
         <button className="rounded-md border-2 border-red-500 p-1 text-red-500">
           Cancel
         </button>
       </div>
-      <div className="mt-3 flex items-center justify-end space-x-10 px-20">
+      <div className="mt-3 flex flex-col items-center space-y-4 px-4 md:flex-row md:justify-end md:space-x-10 md:space-y-0 md:px-20">
         <div className="flex items-center space-x-4">
           <FaGithub />
           <p>Full Name:</p>
@@ -57,7 +56,6 @@ const UserForm = ({ onLoading }) => {
         </div>
         <div className="flex items-center space-x-4">
           <RiGlobalLine />
-
           <p>Profile Photo URL</p>
           <input
             defaultValue={photoUrl}
@@ -69,10 +67,10 @@ const UserForm = ({ onLoading }) => {
           />
         </div>
       </div>
-      <div className="flex justify-between px-10">
+      <div className="flex justify-center px-10 mt-4">
         <button
           onClick={userUpdateInfoHandler}
-          className="my-4 ml-[45%] btn"
+          className="btn"
         >
           Update
         </button>
