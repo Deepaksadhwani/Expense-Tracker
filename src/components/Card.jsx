@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import useDeleteExpenseData from "../hooks/useDeleteExpenseData";
 import useEditExpenseData from "../hooks/useEditExpenseData";
 import useGetExpenseData from "../hooks/useGetExpenseData";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Card = ({
   amount,
@@ -19,12 +19,13 @@ const Card = ({
   const amountRef = useRef(null);
   const editFormRef = useRef(null);
   const dispatch = useDispatch();
+  const email = useSelector((store) => store.user.userData?.email);
 
   const deleteExpenseEntry = () => {
-    useDeleteExpenseData(id);
+    useDeleteExpenseData(id, email);
 
     setTimeout(() => {
-      useGetExpenseData(dispatch, onSetExpenseData);
+      useGetExpenseData(dispatch, onSetExpenseData, email);
     }, 500);
   };
 
@@ -41,15 +42,15 @@ const Card = ({
       description: descriptionRef.current.value,
     });
 
-    useEditExpenseData(id, updatedData);
+    useEditExpenseData(id, updatedData, email);
     editFormRef.current.style.display = "none";
     setTimeout(() => {
-      useGetExpenseData(dispatch, onSetExpenseData);
+      useGetExpenseData(dispatch, onSetExpenseData, email);
     }, 500);
   };
 
   return (
-    <div className="mx-auto my-2 flex w-[300px] flex-col overflow-hidden rounded-lg bg-white shadow-lg   hover:scale-105 transition-all duration-300">
+    <div className="mx-auto my-2 flex w-[300px] flex-col overflow-hidden rounded-lg bg-white shadow-lg   transition-all duration-300 hover:scale-105">
       <form
         ref={editFormRef}
         onSubmit={handleSubmit}

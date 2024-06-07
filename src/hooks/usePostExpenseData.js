@@ -1,8 +1,8 @@
 import toast from "react-hot-toast";
 import { DATABASE_URL } from "../utils/constants";
 
-const email = localStorage.getItem("email");
-const usePostExpenseData = (dataExpense, setLoading) => {
+const usePostExpenseData = (dataExpense, setLoading,email) => {
+
   const email1 = email.slice(0, -9);
   const postExpenseData = async () => {
     setLoading(true);
@@ -15,7 +15,7 @@ const usePostExpenseData = (dataExpense, setLoading) => {
     });
 
     const data = await response.json();
-
+    console.log(data)
     if (response.ok) {
       toast.success("Expense entry is Successfully Added.");
     }

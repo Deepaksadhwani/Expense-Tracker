@@ -1,15 +1,16 @@
 import { DATABASE_URL } from "../utils/constants";
 import { addExpense } from "../store/expenseSlice";
 
-const email = localStorage.getItem("email");
-const useGetExpenseData = async (dispatch, setExpenseData) => {
-  const email1 = email.slice(0, -9);
-  const response = await fetch(DATABASE_URL + `expense/${email1}.json`);
+const useGetExpenseData = async (dispatch, setExpenseData,email) => {
+  console.log(email)
+  const userEmail = email.slice(0, -9);
+  console.log(userEmail)
+  const response = await fetch(DATABASE_URL + `expense/${userEmail}.json`);
 
   const data = await response.json();
 
 
-
+  
   setExpenseData(data);
   dispatch(addExpense(data));
 };

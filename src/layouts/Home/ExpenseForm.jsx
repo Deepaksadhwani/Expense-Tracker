@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import usePostExpenseData from "../../hooks/usePostExpenseData";
 import Shimmer from "../../components/Shimmer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useGetExpenseData from "../../hooks/useGetExpenseData";
 
 const ExpenseForm = ({ onSetExpenseData }) => {
@@ -11,7 +11,7 @@ const ExpenseForm = ({ onSetExpenseData }) => {
   const description = useRef("");
   const category = useRef("");
   const date = useRef("");
-
+  const email = useSelector((store) => store.user.userData?.email);
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -22,12 +22,15 @@ const ExpenseForm = ({ onSetExpenseData }) => {
       date: date.current.value,
     });
 
-    
-    usePostExpenseData(data, setLoading);
+    usePostExpenseData(data, setLoading, email);
 
-    setTimeout(() => {
-      useGetExpenseData(dispatch, onSetExpenseData);
+    const timer = setTimeout(() => {
+      useGetExpenseData(dispatch, onSetExpenseData, email);
     }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
   };
 
   return loading ? (

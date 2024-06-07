@@ -52,7 +52,6 @@ const Login = () => {
         navigate("/");
         setIsLoading(false);
         localStorage.setItem("token", data?.idToken);
-        localStorage.setItem("email", emailValue);
       }
     } else {
       const response = await fetch(USER_SIGN_IN + FIREBASE_KEY, {
@@ -71,7 +70,6 @@ const Login = () => {
       } else {
         navigate("/");
         localStorage.setItem("token", data?.idToken);
-        localStorage.setItem("email", emailValue);
       }
     }
   };

@@ -1,9 +1,7 @@
 import toast from "react-hot-toast";
 import { DATABASE_URL } from "../utils/constants";
 
-const email = localStorage.getItem("email");
-
-const useDeleteExpenseData = (id) => {
+const useDeleteExpenseData = (id, email) => {
   const email1 = email.slice(0, -9);
   const deleteExpenseData = async () => {
     const response = await fetch(
@@ -18,8 +16,7 @@ const useDeleteExpenseData = (id) => {
 
     const data = await response.json();
     if (response.ok) {
-      toast.success(
-        "Expense  entry is Successfully Deleted.");
+      toast.success("Expense  entry is Successfully Deleted.");
     }
   };
   deleteExpenseData();

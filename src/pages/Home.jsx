@@ -12,19 +12,19 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const ExpenseArray = useState([]);  
+  const email = useSelector((store) => store.user.userData?.email);
   const userToken = localStorage.getItem("token");
   const parseData = JSON.parse(localStorage.getItem("userData"));
   const [expenseData, setExpenseData] = useState("");
   const updatedProfileStatus = parseData?.displayName;
+  
+  console.log(email);
   const moveToUserPageHandler = () => {
     navigate("/ProfilePage");
   };
 
-  
-
   useEffect(() => {
-    useGetExpenseData(dispatch, setExpenseData);
+    useGetExpenseData(dispatch, setExpenseData, email);
     useGetUserData(dispatch, userToken);
 
     const timer = setTimeout(() => {
@@ -34,21 +34,23 @@ const Home = () => {
       dispatch(setUserData(parseData));
     }
     return () => clearTimeout(timer);
-  }, []);
+  }, [email]);
   return loading ? (
     <Shimmer />
   ) : (
     <div className="h-screen">
       {!updatedProfileStatus ? (
         <div className="flex items-center justify-between bg-yellow-300 px-10">
-          <h1 className="text-gray-700 text-lg font-semibold">Welcome to expense tracker</h1>
+          <h1 className="text-lg font-semibold text-gray-700">
+            Welcome to expense tracker
+          </h1>
           <div className="flex items-center space-x-2 rounded-full bg-slate-400 ">
             <p className="select-none rounded-full p-1">
               Your profile is incomplete
             </p>
             <button
               onClick={moveToUserPageHandler}
-              className=" border-2 border-black  rounded-full hover:scale-105 transition-all duration-300 bg-rose-400 text-white font-semibold p-2 "
+              className=" rounded-full border-2  border-black bg-rose-400 p-2 font-semibold text-white transition-all duration-300 hover:scale-105 "
             >
               complete Now
             </button>

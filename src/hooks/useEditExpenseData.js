@@ -2,10 +2,10 @@ import toast from "react-hot-toast";
 import { DATABASE_URL } from "../utils/constants";
 
 
-const email = localStorage.getItem("email");
 
 
-const useEditExpenseData = async(id,editedData) => {
+
+const useEditExpenseData = async(id,editedData,email) => {
   const email1 = email.slice(0, -9);
 
     const response = await fetch(DATABASE_URL + `expense/${email1}/${id}.json`, {
